@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="./assets/images/favicon.ico" />
+    <link rel="stylesheet" href="./assets/styles/index.css" />
+</head>
+<body>
+    <div id="container" class="container">
+        <div id="slide" class="slide clearfix">
+            <img id="scene" class="fl" src="./assets/images/interface.jpg" alt="scene">
+            <ul id="ending" class="ending fl">
+                <li>
+                    <h1 class="uppercase">
+                        <a class="underline" href="">become a monk</a>
+                    </h1>
+                </li>
+                <li>
+                    Interested in joining our monastery?<br />
+                    Check out our current openings on <a href="">mediamonks.com/careers</a>.<br />
+                    <span>Mail</span><span>Facebook</span><span>Twitter</span>
+                </li>
+                <li></li>
+            </ul>
+        </div>
+        <i id="prev" class="arrow left"></i>
+        <i id="next" class="arrow right"></i>
+        <ul id="navigation">
+            <li class="first active" data-number="0"></li>
+            <li class="number" data-number="1">1</li>
+            <li class="number" data-number="2">2</li>
+            <li class="number" data-number="3">3</li>
+            <li class="number" data-number="4">4</li>
+            <li class="number" data-number="5">5</li>
+            <li class="number" data-number="6">6</li>
+            <li class="number" data-number="7">7</li>
+            <li class="number" data-number="8">8</li>
+            <li class="last" data-number="9">
+            </li>
+        </ul>
+        <img id="logo" src="./assets/images/logo.svg" />
+        <div class="text-wrap">
+            <h1 id="bigText" class="underline bigTextTop">
+                WE ARE BREAKING OUR VOWOF SILENCE
+            </h1>
+            <span id="smallText">In January 2011, after a decade of digital, we opened the doors to our temple. Follow our noble eightfold path to digital enlightenment here.</span>
+        </div>
+    </div>
+</body>
+<script>
+    window.onload = function(){
+        const slide = document.getElementById('slide');
+        const scene = document.getElementById('scene');
+        const ending = document.getElementById('ending');
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
+        const bigText = document.getElementById('bigText');
+        const smallText = document.getElementById('smallText');
+
+        let currentNum = 0
+        let windowWidth = window.innerWidth
+        let sliceWidth = scene.width / 8;
+        let sceneWidth = (scene.width - sliceWidth*2) / 7 ;
+        prev.style.display = 'none'
+        const navigation = document.getElementById('navigation')
+        const liNodes = Array.from(navigation.getElementsByTagName('li'))
+
+        navigation.addEventListener('click',(event)=>{handleChangeNum(Number(event.target.dataset.number))})
+        prev.addEventListener('click',()=>{handleChangeNum('prev')})
+        next.addEventListener('click',()=>{handleChangeNum('next')})
+        
+        
+        // 绑定点击事件
+        function handleChangeNum(target){
+            let current = target === 'prev' ? currentNum - 1 : target === 'next' ? currentNum + 1 : target;
+            currentNum = current
+            let num =  sceneWidth * currentNum
+            prev.style.display = 'block'
+            next.style.display = 'block'
+            if(currentNum < 1 ) {
+                currentNum = 0
+                num = 0
+                prev.style.display = 'none'
+            }
+            if(currentNum >= 9){
+                currentNum = 9
+                num = (scene.width  + ending.offsetWidth) - (sliceWidth * 0.45 + ending.offsetWidth)
+                next.style.display = 'none'
+            }
+            
+            if (currentNum === 7 || currentNum === 8) {
+                num = scene.width -  windowWidth
+            }
+            slide.style.left = `-${num}px` 
+            setActive()
+            setText()
+        }
+        // 激活当前点击
+        function setActive(){
+            liNodes.forEach((node,index) => {
+                if(index === currentNum) {
+                    node.classList.add('active')
+                } else {
+                    node.classList.remove('active')
+                }
+            });
+        }
+        // 文字设置
+        const textData = [
+            {
+                bigText: 'WE ARE BREAKING OUR VOWOF SILENCE',
+                smallText: 'In January 2011, after a decade of digital, we opened the doors to our temple. Follow our noble eightfold path to digital enlightenment here.',
+                className: 'bigTextTop underline'
+            },
+            {
+                bigText: '1 TALENT IS GIVENTRUE SKILLISEARNED',
+                smallText: 'Step 1 out of 8 on the path to digital enlightenment.',
+                className: 'bigTextLeft underline'
+            },
+            {
+                bigText: '2 TALENT IS GIVENTRUE SKILLISEARNED',
+                smallText: 'Step 2 out of 8 on the path to digital enlightenment.',
+                className: 'bigTextLeft underline'
+            },
+            {
+                bigText: '3 TALENT IS GIVENTRUE SKILLISEARNED',
+                smallText: 'Step 3 out of 8 on the path to digital enlightenment.',
+                className: 'bigTextRight underline'
+            },
+            {
+                bigText: '4 TALENT IS GIVENTRUE SKILLISEARNED',
+                smallText: 'Step 4 out of 8 on the path to digital enlightenment.',
+                className: 'bigTextRight underline'
+            },
+            {
+                bigText: '5 TALENT IS GIVENTRUE SKILLISEARNED',
+                smallText: 'Step 5 out of 8 on the path to digital enlightenment.',
+                className: 'bigTextRight underline'
+            },
+            {
+                bigText: '6 TALENT IS GIVENTRUE SKILLISEARNED',
+                smallText: 'Step 6 out of 8 on the path to digital enlightenment.',
+                className: 'bigTextLeft underline'
+            },
+            {
+                bigText: '7 TALENT IS GIVENTRUE SKILLISEARNED',
+                smallText: 'Step 7 out of 8 on the path to digital enlightenment.',
+                className: 'bigTextLeft underline'
+            },
+            {
+                bigText: '8 TALENT IS GIVENTRUE SKILLISEARNED',
+                smallText: 'Step 8 out of 8 on the path to digital enlightenment.',
+                className: 'bigTextLeft underline'
+            }
+        ]
+        function setText(){
+            if(currentNum > 8) {
+                bigText.innerHTML = smallText.innerHTML = ''
+                return false;
+            }
+            bigText.innerHTML = textData[currentNum]['bigText'];
+            bigText.className = textData[currentNum]['className'];
+            smallText.innerHTML = textData[currentNum]['smallText'];
+            if(currentNum === 0) {
+                smallText.style.cssText = 'left: 50px; bottom: 100px;';
+            } else {
+                smallText.style.cssText = 'left: 320px; bottom: 20px;';
+            }
+        }
+    }
+</script>
+</html>
